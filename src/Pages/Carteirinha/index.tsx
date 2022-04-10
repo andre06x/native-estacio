@@ -132,7 +132,7 @@ const Carteirinha = ({ navigation }: { navigation: any }) => {
               <Text
                 style={styles.value_info_text}
               >
-                168.555.807-00
+                123.456.789-00
               </Text>
             </View>
 
@@ -145,7 +145,7 @@ const Carteirinha = ({ navigation }: { navigation: any }) => {
               <Text
                 style={styles.value_info_text}
               >
-                26 Jun 2000
+                1 Jun 1934
               </Text>
             </View>
           </View>
