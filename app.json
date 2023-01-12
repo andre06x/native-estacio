@@ -28,6 +28,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "userInterfaceStyle": "automatic"
+    "userInterfaceStyle": "automatic",
+    "androidNavigationBar": {
+     "visible": true,
+     "barStyle": "dark-content",
+     "backgroundColor": "#ffffff"
+   }
   }
 }
