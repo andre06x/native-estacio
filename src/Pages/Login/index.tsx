@@ -1,98 +1,99 @@
-import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, View, TouchableHighlight, TouchableOpacity } from 'react-native';
+import React from "react";
+import { StatusBar } from "expo-status-bar";
+import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 const Login = ({ navigation }: { navigation: any }) => {
   return (
     <View style={styles.container}>
+      <View style={{ marginTop: 100, alignItems: "center" }}>
+        <Image style={styles.logo} source={require("./logo.png")} />
+        <Text style={styles.titulo}>Conecte-se com sua vida acadêmica</Text>
+      </View>
 
-      <Image 
-        style={styles.logo} 
-        source={require('./logo.png')} 
-      />
+      <View>
+        <TouchableOpacity
+          style={styles.botao_entrar}
+          onPress={() => navigation.navigate("LoginMicrosoft")}
+        >
+          <Text style={{ color: "#fff", fontSize: 17 }}>Entrar</Text>
+        </TouchableOpacity>
 
-      <Text 
-        style={styles.titulo}
-      >
-        Conecte-se com sua vida acadêmica
-      </Text>
+        <TouchableOpacity
+          style={styles.botao_esqueci}
+          onPress={() => navigation.navigate("LoginMicrosoft")}
+        >
+          <Text style={styles.text}>Esqueci meu e-mail de acesso</Text>
+        </TouchableOpacity>
 
-      <Text 
-        style={styles.email}
-      >
-        Seu email de acesso é:
-      </Text>
-      <Text 
-        style={styles.email}
-      >
-        suamatricula@alunos.estacio.br
-      </Text>
+        <Text style={styles.text_ajuda}>Precisa de ajuda?</Text>
 
-      <TouchableOpacity style={styles.botao_entrar} onPress={() => navigation.navigate("LoginMicrosoft")}>
-        <Text style={{color: "#fff"}}>Entrar</Text>
-      </TouchableOpacity>
-
-      <Text style={{color: "#24BCCA"}}>Esqueci minha senha</Text>
-
-      <TouchableOpacity style={styles.botao_ajuda}>
-        <Text style={{color: "#24BCCA"}}>Precisa de Ajuda?</Text>
-      </TouchableOpacity>
-
-      <StatusBar style="dark" />
+        <StatusBar style="dark" />
+      </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 10,
   },
   logo: {
     width: 220,
     height: 60,
-    marginBottom: 20    
+    marginBottom: 50,
   },
   titulo: {
     fontSize: 30,
     fontWeight: "600",
     textAlign: "center",
-    marginBottom: 24
+    marginBottom: 24,
   },
   email: {
     fontSize: 15,
     fontWeight: "600",
     textAlign: "center",
     color: "#999",
-
   },
   botao_entrar: {
-    marginVertical: 34,
+    marginBottom: 15,
     width: 300,
-    height: 40,
-    borderRadius: 30,
-    backgroundColor: "#24BCCA",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  botao_ajuda: {
-    position: "absolute",
-    bottom: 30,
-    width: 300,
-    height: 40,
-    borderRadius: 30,
-    borderWidth: 2,
-    borderColor: "#24BCCA",
-    backgroundColor: "transparent",
+    height: 60,
+    borderRadius: 10,
+    backgroundColor: "#144BC9",
     justifyContent: "center",
     alignItems: "center",
-    
   },
 
+  botao_esqueci: {
+    width: 300,
+    height: 60,
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 15,
+    borderWidth: 2,
+    borderColor: "#144BC9",
+  },
 
+  text: {
+    fontSize: 17,
+    color: "#144BC9",
+    fontWeight: "700",
+  },
 
+  text_ajuda: {
+    fontSize: 17,
+    color: "#144BC9",
+    fontWeight: "700",
+    textAlign: "center",
+    marginTop: 30,
+    marginBottom: 40,
+  },
 });
 
-export { Login }
+export { Login };
