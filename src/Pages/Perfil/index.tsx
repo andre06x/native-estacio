@@ -28,10 +28,7 @@ const Perfil = ({ navigation }: { navigation: any }) => {
               <RectButton style={styles.avatar_container}>
                 <Text style={styles.avatar_text}>A</Text>
 
-                <RectButton
-                  style={styles.avatar_foto}
-                  onPress={() => console.log("press")}
-                >
+                <RectButton>
                   <Feather name="camera" color="#000" size={20} />
                 </RectButton>
               </RectButton>
@@ -103,7 +100,7 @@ const Perfil = ({ navigation }: { navigation: any }) => {
         </View>
       </ScrollView>
 
-      <TabBar navigation={navigation} />
+      <TabBar navigation={navigation} tela="Perfil" />
     </SafeAreaView>
   );
 };

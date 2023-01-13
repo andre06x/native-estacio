@@ -28,28 +28,6 @@ import { RectButton } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import { TabBar } from "../Components/Tab";
 
-{
-  /* <Feather name="check-circle" size={24} color="black" /> */
-}
-{
-  /* <Feather name="calendar" size={24} color="black" /> */
-}
-{
-  /* <Feather name="list" size={24} color="black" />0 */
-}
-{
-  /* <Feather name="bookmark" size={24} color="black" /> */
-}
-{
-  /* <Feather name="clipboard" size={24} color="black" /> */
-}
-{
-  /* <Feather name="credit-card" size={24} color="black" /> */
-}
-{
-  /* <Feather name="grid" size={24} color="black" /> */
-}
-
 const opcoes = [
   { nome: "Avaliações", icon: "check-circle" },
   { nome: "Notas e Informaçôes", icon: "grid" },
@@ -116,41 +94,8 @@ const Home2 = ({ navigation }: { navigation: any }) => {
           />
         </View>
       </ScrollView>
-      <TabBar navigation={navigation} />
+      <TabBar navigation={navigation} tela="Ínicio" />
     </SafeAreaView>
-  );
-};
-
-const TabBar2 = ({ navigation }) => {
-  const tabOptions = [
-    { nome: "Ínicio", icon: "home" },
-    { nome: "Boletos", icon: "dollar-sign" },
-    { nome: "Solicitações", icon: "message-square" },
-    { nome: "Perfil", icon: "user" },
-  ];
-  return (
-    <View horizontal style={styles.tabs}>
-      {tabOptions.map((item) => (
-        <TouchableOpacity
-          style={styles.view_tabs}
-          onPress={() => navigation.navigate("LoginMicrosoft")}
-        >
-          <Feather
-            name={item?.icon}
-            size={25}
-            color={item.nome === "Ínicio" ? "#2C52A4" : "#ddd"}
-          />
-          <Text
-            style={{
-              marginTop: 8,
-              color: item.nome === "Ínicio" ? "#2C52A4" : "#ddd",
-            }}
-          >
-            {item.nome}
-          </Text>
-        </TouchableOpacity>
-      ))}
-    </View>
   );
 };
 
