@@ -13,6 +13,7 @@ import { LoginMicrosoft } from "./Pages/LoginMicrosoft";
 import { SenhaMicrosoft } from "./Pages/SenhaMicrosoft";
 import { Home2 } from "./Pages/Home/index2";
 import { Perfil } from "./Pages/Perfil";
+import { Boletos } from "./Pages/Boletos";
 
 const Stack = createStackNavigator();
 
@@ -77,6 +78,24 @@ const Routes = () => {
           }}
           name="Carteirinha"
           component={Carteirinha}
+        />
+
+        <Stack.Screen
+          options={{
+            gestureEnabled: true,
+            cardOverlayEnabled: true,
+            ...TransitionPresets.SlideFromRightIOS,
+            headerShown: true,
+            title: "Boletos",
+            headerTintColor: "#24BCCA",
+            headerTitleStyle: { color: "black" },
+            headerTitleAlign: "center",
+
+            headerShadowVisible: false,
+            headerStyle: { backgroundColor: "#fff" },
+          }}
+          name="Boletos"
+          component={Boletos}
         />
       </Stack.Navigator>
     </NavigationContainer>
