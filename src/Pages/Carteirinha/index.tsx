@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   Image,
@@ -26,12 +26,34 @@ import {
 } from "@expo-google-fonts/inter";
 import * as ImagePicker from "expo-image-picker";
 
+import * as SplashScreen from "expo-splash-screen";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Carteirinha = ({ navigation }: { navigation: any }) => {
   const [imageUri, setImageUri] = useState("");
-  const colorScheme = useColorScheme();
+
+  let [fontsLoaded] = useFonts({
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+    Poppins_500Medium,
+    Inter_600SemiBold,
+    Inter_500Medium,
+  });
+
+  useEffect(() => {
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
+    }
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
 
   useEffect(() => {
     const getImage = async () => {
@@ -44,14 +66,6 @@ const Carteirinha = ({ navigation }: { navigation: any }) => {
 
     getImage();
   }, []);
-
-  let [fontsLoaded] = useFonts({
-    Poppins_600SemiBold,
-    Poppins_700Bold,
-    Poppins_500Medium,
-    Inter_600SemiBold,
-    Inter_500Medium,
-  });
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -103,123 +117,115 @@ const Carteirinha = ({ navigation }: { navigation: any }) => {
   };
 
   if (!fontsLoaded) {
-    return <AppLoading />;
-  } else
-    return (
-      <>
-        <StatusBar style="dark" />
+    return null;
+  }
+  return (
+    <>
+      <StatusBar style="dark" />
 
-        <View style={styles.container}>
-          <TouchableOpacity
-            style={{ alignItems: "center" }}
-            onPress={showAlert}
+      <View style={styles.container} onLayout={onLayoutRootView}>
+        <TouchableOpacity style={{ alignItems: "center" }} onPress={showAlert}>
+          <View style={styles.profile_text_image}>
+            {imageUri !== "" ? (
+              <Image style={styles.profile_image} source={{ uri: imageUri }} />
+            ) : (
+              <Text style={styles.profile_text}>AS</Text>
+            )}
+            {/* <Image style={styles.profile_image} source={{ uri: imageUri }} /> */}
+
+            <View style={styles.profile_container_icon}>
+              <FontAwesome5 name="plus" size={10} color="white" />
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <View style={styles.view_profile}>
+          <Text style={styles.nome}>Andre Victor da Costa Silva</Text>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginTop: 32,
+              marginBottom: 20,
+            }}
           >
-            <View style={styles.profile_text_image}>
-              {imageUri !== "" ? (
-                <Image
-                  style={styles.profile_image}
-                  source={{ uri: imageUri }}
-                />
-              ) : (
-                <Text style={styles.profile_text}>AS</Text>
-              )}
-              {/* <Image style={styles.profile_image} source={{ uri: imageUri }} /> */}
-
-              <View style={styles.profile_container_icon}>
-                <FontAwesome5 name="plus" size={10} color="white" />
-              </View>
-            </View>
-          </TouchableOpacity>
-
-          <View style={styles.view_profile}>
-            <Text style={styles.nome}>Andre Victor da Costa Silva</Text>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginTop: 32,
-                marginBottom: 20,
-              }}
-            >
-              <View>
-                <Text style={styles.label_info_text}>CPF</Text>
-                <Text style={styles.value_info_text}>123.456.789-00</Text>
-              </View>
-
-              <View>
-                <Text style={styles.label_info_text}>Nascimento</Text>
-                <Text style={styles.value_info_text}>1 Jun 1934</Text>
-              </View>
+            <View>
+              <Text style={styles.label_info_text}>CPF</Text>
+              <Text style={styles.value_info_text}>123.456.789-00</Text>
             </View>
 
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginBottom: 10,
-              }}
-            >
-              <View>
-                <Text style={styles.label_info_text}>Matrícula</Text>
-                <Text style={styles.value_info_text}>
-                  {`${matricula.substring(0, 4)} ${matricula.substring(
-                    4,
-                    8
-                  )} ${matricula.substring(8)}`}
-                </Text>
-              </View>
-
-              <View>
-                <Text style={styles.label_info_text}>Validade</Text>
-                <Text style={styles.value_info_text}>7 Jul 2022</Text>
-              </View>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginTop: 10,
-                marginBottom: 10,
-              }}
-            >
-              <View>
-                <Text style={styles.label_info_text}>Graduação (Ativo)</Text>
-                <Text style={styles.value_info_text}>
-                  Sistemas de informação
-                </Text>
-              </View>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginTop: 10,
-                marginBottom: 10,
-              }}
-            >
-              <View>
-                <Text style={styles.label_info_text}>Campus</Text>
-                <Text style={styles.value_info_text}>NITERÓI</Text>
-              </View>
-            </View>
-
-            <View style={{ alignItems: "center", marginTop: 33 }}>
-              <Image
-                style={{ width: 125, height: 34 }}
-                source={require("../Login/logo.png")}
-              />
+            <View>
+              <Text style={styles.label_info_text}>Nascimento</Text>
+              <Text style={styles.value_info_text}>1 Jun 1934</Text>
             </View>
           </View>
 
-          <Text style={styles.label_valido}>
-            Válida mediante apresentação de documento com foto.
-          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginBottom: 10,
+            }}
+          >
+            <View>
+              <Text style={styles.label_info_text}>Matrícula</Text>
+              <Text style={styles.value_info_text}>
+                {`${matricula.substring(0, 4)} ${matricula.substring(
+                  4,
+                  8
+                )} ${matricula.substring(8)}`}
+              </Text>
+            </View>
+
+            <View>
+              <Text style={styles.label_info_text}>Validade</Text>
+              <Text style={styles.value_info_text}>7 Jul 2022</Text>
+            </View>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginTop: 10,
+              marginBottom: 10,
+            }}
+          >
+            <View>
+              <Text style={styles.label_info_text}>Graduação (Ativo)</Text>
+              <Text style={styles.value_info_text}>Sistemas de informação</Text>
+            </View>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginTop: 10,
+              marginBottom: 10,
+            }}
+          >
+            <View>
+              <Text style={styles.label_info_text}>Campus</Text>
+              <Text style={styles.value_info_text}>NITERÓI</Text>
+            </View>
+          </View>
+
+          <View style={{ alignItems: "center", marginTop: 33 }}>
+            <Image
+              style={{ width: 125, height: 34 }}
+              source={require("../Login/logo.png")}
+            />
+          </View>
         </View>
-      </>
-    );
+
+        <Text style={styles.label_valido}>
+          Válida mediante apresentação de documento com foto.
+        </Text>
+      </View>
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
