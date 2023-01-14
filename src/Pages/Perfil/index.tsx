@@ -21,87 +21,96 @@ const opcoes = [
 const Perfil = ({ navigation }: { navigation: any }) => {
   return (
     <SafeAreaView style={{ flex: 1, paddingBottom: 80 }}>
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.view_info}>
-            <View style={styles.view_info_dados}>
-              <RectButton style={styles.avatar_container}>
-                <Text style={styles.avatar_text}>A</Text>
-
-                <RectButton>
-                  <Feather name="camera" color="#000" size={20} />
-                </RectButton>
-              </RectButton>
-
-              <Text style={styles.text_info_dados_primario}>Andre Silva</Text>
-              <Text style={styles.text_info_dados_secundario}>
-                andre06x@gmail.com
-              </Text>
-              <Text style={styles.text_info_dados_telefone}>
-                (21) 96627-0362
-              </Text>
+      <View>
+        <FlatList
+          columnWrapperStyle={styles.container_opcoes}
+          data={opcoes}
+          renderItem={({ item }) => (
+            <View style={styles.view_opcao}>
+              <Feather name={item.icon} size={24} color="black" />
+              <Text style={styles.text_opcao}>{item.nome}</Text>
             </View>
-            <Text style={styles.text_info_dados_secundario}>
-              Sistemas de informação
-            </Text>
-          </View>
-        </View>
-        <View style={styles.dados}>
-          <View style={styles.container_logo}>
-            <Image style={styles.logo} source={require("./logo.png")} />
-          </View>
-          <View style={styles.container_dados}>
-            <View style={{ marginRight: 40 }}>
-              <Text>Matrícula</Text>
-              <Text>2019 0827 4417</Text>
-            </View>
-
-            <View>
-              <Text>Validade</Text>
-              <Text>31 Jul 2023</Text>
-            </View>
-          </View>
-        </View>
-
-        <TouchableOpacity
-          style={styles.view_acessar_carteirinha}
-          onPress={() => navigation.navigate("Carteirinha")}
-        >
-          <Feather
-            name="maximize-2"
-            color="#003"
-            size={20}
-            style={{ marginRight: 10 }}
-          />
-          <Text>Acessar carteirinha</Text>
-        </TouchableOpacity>
-
-        <View style={styles.container_opcoes}>
-          <Text style={styles.text_curso}>Menu perfil</Text>
-
-          <FlatList
-            data={opcoes}
-            renderItem={({ item }) => (
-              <View style={styles.view_opcao}>
-                <Feather name={item.icon} size={24} color="black" />
-
-                <Text style={styles.text_opcao}>{item.nome}</Text>
-              </View>
-            )}
-            //Setting the number of column
-            numColumns={2}
-            keyExtractor={(item, index) => String(index)}
-          />
-          <Text style={styles.text_versao}>Versão do app 5.13.0</Text>
-
-          <TouchableOpacity>
-            <Text style={styles.text_ajuda}>Sair do APP</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+          )}
+          numColumns={2}
+          ListHeaderComponent={ListHeaderComponent}
+          ListFooterComponent={ListFooterComponent}
+          keyExtractor={(item, index) => String(index)}
+        />
+      </View>
 
       <TabBar navigation={navigation} tela="Perfil" />
     </SafeAreaView>
+  );
+};
+
+const ListHeaderComponent = () => {
+  return (
+    <View>
+      <View style={styles.container}>
+        <View style={styles.view_info}>
+          <View style={styles.view_info_dados}>
+            <RectButton style={styles.avatar_container}>
+              <Text style={styles.avatar_text}>A</Text>
+
+              <RectButton style={styles.avatar_foto}>
+                <Feather name="camera" color="#000" size={20} />
+              </RectButton>
+            </RectButton>
+
+            <Text style={styles.text_info_dados_primario}>Andre Silva</Text>
+            <Text style={styles.text_info_dados_secundario}>
+              andre06x@gmail.com
+            </Text>
+            <Text style={styles.text_info_dados_telefone}>(21) 96627-0362</Text>
+          </View>
+          <Text style={styles.text_info_dados_secundario}>
+            Sistemas de informação
+          </Text>
+        </View>
+      </View>
+      <View style={styles.dados}>
+        <View style={styles.container_logo}>
+          <Image style={styles.logo} source={require("./logo.png")} />
+        </View>
+        <View style={styles.container_dados}>
+          <View style={{ marginRight: 40 }}>
+            <Text>Matrícula</Text>
+            <Text>2019 0827 4417</Text>
+          </View>
+
+          <View>
+            <Text>Validade</Text>
+            <Text>31 Jul 2023</Text>
+          </View>
+        </View>
+      </View>
+
+      <TouchableOpacity
+        style={styles.view_acessar_carteirinha}
+        onPress={() => navigation.navigate("Carteirinha")}
+      >
+        <Feather
+          name="maximize-2"
+          color="#003"
+          size={20}
+          style={{ marginRight: 10 }}
+        />
+        <Text>Acessar carteirinha</Text>
+      </TouchableOpacity>
+      <Text style={styles.text_curso}>Menu perfil</Text>
+    </View>
+  );
+};
+
+const ListFooterComponent = () => {
+  return (
+    <View style={{ height: 300 }}>
+      <Text style={styles.text_versao}>Versão do app 5.13.0</Text>
+
+      <TouchableOpacity>
+        <Text style={styles.text_ajuda}>Sair do APP</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -222,13 +231,15 @@ const styles = StyleSheet.create({
   },
 
   text_curso: {
+    paddingHorizontal: 20,
+    paddingTop: 30,
     color: "#000",
     fontSize: 20,
   },
 
   view_opcao: {
     flex: 1,
-    marginVertical: 10,
+    marginVertical: 0,
     marginHorizontal: 5,
     backgroundColor: "#fff",
     borderRadius: 4,
