@@ -52,7 +52,10 @@ const Home2 = ({ navigation }: { navigation: any }) => {
               <Text style={styles.text_info}>2019 0827 4417</Text>
             </View>
 
-            <RectButton style={styles.avatar_container}>
+            <RectButton
+              style={styles.avatar_container}
+              onPress={() => navigation.navigate("Perfil")}
+            >
               <Text style={styles.avatar_text}>A</Text>
             </RectButton>
           </View>
