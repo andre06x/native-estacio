@@ -43,64 +43,71 @@ const Home2 = ({ navigation }: { navigation: any }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" backgroundColor="#144BC9" />
-      <View style={{ backgroundColor: "#F8F8F8" }}>
-        <View style={styles.profile}>
-          <View style={styles.info}>
-            <View>
-              <Text style={styles.text_info}>Estácio</Text>
-              <Text style={styles.text_info}>Sistemas de informação</Text>
-              <Text style={styles.text_info}>2019 0827 4417</Text>
-            </View>
+      <FlatList
+        data={opcoes}
+        style={styles.container_opcoes}
+        columnWrapperStyle={{ paddingHorizontal: 20 }}
+        horizontal={false}
+        renderItem={({ item }) => (
+          <View style={styles.view_opcao}>
+            <Feather name={item.icon} size={24} color="black" />
 
-            <RectButton
-              style={styles.avatar_container}
-              onPress={() => navigation.navigate("Perfil")}
-            >
-              <Text style={styles.avatar_text}>A</Text>
-            </RectButton>
+            <Text style={styles.text_opcao}>{item.nome}</Text>
           </View>
-          <Text style={styles.text_info}>Sala de aula virtual</Text>
-          <ScrollView
-            horizontal
-            style={styles.scrollview_disciplinas}
-            showsHorizontalScrollIndicator={false}
-          >
-            <RectButton style={styles.view_disciplina}>
-              <Text>Bases matemáticas</Text>
-            </RectButton>
-
-            <RectButton style={styles.view_disciplina}>
-              <Text>Bases matemáticas</Text>
-            </RectButton>
-
-            <RectButton style={styles.view_disciplina}>
-              <Text>Bases matemáticas</Text>
-            </RectButton>
-          </ScrollView>
-        </View>
-
-        <FlatList
-          data={opcoes}
-          style={styles.container_opcoes}
-          horizontal={false}
-          renderItem={({ item }) => (
-            <View style={styles.view_opcao}>
-              <Feather name={item.icon} size={24} color="black" />
-
-              <Text style={styles.text_opcao}>{item.nome}</Text>
-            </View>
-          )}
-          numColumns={2}
-          keyExtractor={(item, index) => String(index)}
-          ListHeaderComponent={<Text style={styles.text_curso}>Meu curso</Text>}
-          ListFooterComponent={<View style={{ height: 300 }} />}
-        />
-      </View>
+        )}
+        numColumns={2}
+        keyExtractor={(item, index) => String(index)}
+        ListHeaderComponent={<ListHeaderComponent navigation={navigation} />}
+        ListFooterComponent={<View style={{ height: 30 }} />}
+      />
       <TabBar navigation={navigation} tela="Ínicio" />
     </SafeAreaView>
   );
 };
 
+const ListHeaderComponent = ({ navigation }: { navigation: any }) => {
+  return (
+    <View style={{ backgroundColor: "#F8F8F8" }}>
+      <View style={styles.profile}>
+        <View style={styles.info}>
+          <View>
+            <Text style={styles.text_info}>Estácio</Text>
+            <Text style={styles.text_info}>Sistemas de informação</Text>
+            <Text style={styles.text_info}>2019 0827 4417</Text>
+          </View>
+
+          <RectButton
+            style={styles.avatar_container}
+            onPress={() => navigation.navigate("Perfil")}
+          >
+            <Text style={styles.avatar_text}>A</Text>
+          </RectButton>
+        </View>
+        <Text style={styles.text_info}>Sala de aula virtual</Text>
+        <ScrollView
+          horizontal
+          style={styles.scrollview_disciplinas}
+          showsHorizontalScrollIndicator={false}
+        >
+          <RectButton style={styles.view_disciplina}>
+            <Text>Bases matemáticas</Text>
+          </RectButton>
+
+          <RectButton style={styles.view_disciplina}>
+            <Text>Bases matemáticas</Text>
+          </RectButton>
+
+          <RectButton style={styles.view_disciplina}>
+            <Text>Bases matemáticas</Text>
+          </RectButton>
+        </ScrollView>
+      </View>
+      <View style={{ backgroundColor: "#F2F2F2" }}>
+        <Text style={styles.text_curso}>Meu curso</Text>
+      </View>
+    </View>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -156,13 +163,14 @@ const styles = StyleSheet.create({
 
   container_opcoes: {
     backgroundColor: "#F2F2F2",
-    padding: 20,
     paddingBottom: 50,
   },
 
   text_curso: {
     color: "#000",
     fontSize: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
 
   view_opcao: {
