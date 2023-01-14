@@ -4,17 +4,43 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TabBar } from "../Components/Tab";
 import { Feather } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const Boletos = ({ navigation }: { navigation: any }) => {
-  const [mesSelecionado, setMesSelecionado] = useState("Jan");
+const meses = [
+  {
+    mes: "Out",
+    tipo: "Mensalidade",
+    vencido: false,
+    valor: "2.048,32",
+    vencimento: "5 Out",
+  },
+  {
+    mes: "Nov",
+    tipo: "Mensalidade",
+    vencido: false,
+    valor: "2.048,32",
+    vencimento: "5 Nov",
+  },
+  {
+    mes: "Dez",
+    tipo: "Mensalidade",
+    vencido: false,
+    valor: "2.048,32",
+    vencimento: "5 Dez",
+  },
+  {
+    mes: "Jan",
+    tipo: "Renovação / Reabertura",
+    vencido: true,
+    valor: "2.048,32",
+    vencimento: "5 Jan",
+  },
+];
 
-  const meses = [
-    { mes: "Out" },
-    { mes: "Nov" },
-    { mes: "Dez" },
-    { mes: "Jan" },
-  ];
+const Boletos = ({ navigation }: { navigation: any }) => {
+  const [mesSelecionado, setMesSelecionado] = useState(meses[meses.length - 1]);
 
   return (
     <View style={styles.container}>
@@ -25,34 +51,49 @@ const Boletos = ({ navigation }: { navigation: any }) => {
             <Text style={styles.text_ano}>2023</Text>
 
             <ScrollView horizontal style={styles.container_meses}>
-              {meses.map((item) => (
-                <View
+              {meses.map((item, indexMes) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    setMesSelecionado(meses[indexMes]);
+                  }}
                   style={{
                     marginRight: 20,
                     width: 36,
                     height: 36,
                     borderRadius: 18,
                     backgroundColor:
-                      item.mes === mesSelecionado ? "#24BCCA" : "#fff",
+                      item.mes === mesSelecionado.mes ? "#24BCCA" : "#fff",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
                   <Text
                     style={{
-                      color: item.mes === mesSelecionado ? "#fff" : "#000",
+                      color: item.mes === mesSelecionado.mes ? "#fff" : "#000",
                     }}
                   >
                     {item.mes}
                   </Text>
-                </View>
+                </TouchableOpacity>
               ))}
             </ScrollView>
           </View>
-          <View style={styles.container_boleto}>
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
+          <View
+            style={{
+              margin: 35,
+              padding: 15,
+              borderRadius: 5,
+              borderWidth: 1,
+              backgroundColor: "#fff",
+              borderLeftWidth: 5,
+
+              borderLeftColor: mesSelecionado.vencido ? "#D2015D" : "#16AA03",
+              borderRightColor: "#ddd",
+              borderTopColor: "#ddd",
+              borderBottomColor: "#ddd",
+            }}
+          >
+            <View style={styles.container_flex_between}>
               <View>
                 <Text>Renovação/ Reabertura</Text>
                 <View style={styles.container_vencido}>
@@ -61,86 +102,59 @@ const Boletos = ({ navigation }: { navigation: any }) => {
                       width: 6,
                       height: 6,
                       borderRadius: 3,
-                      backgroundColor: "#D2015D",
+                      backgroundColor: mesSelecionado.vencido
+                        ? "#D2015D"
+                        : "#16AA03",
                       marginRight: 10,
                     }}
                   ></View>
                   <Text
                     style={{
-                      color: "#D2015D",
+                      color: mesSelecionado.vencido ? "#D2015D" : "#16AA03",
                       fontWeight: "bold",
                       fontSize: 14,
                     }}
                   >
-                    Vencido
+                    {mesSelecionado.vencido ? "Vencido" : "Pago"}
                   </Text>
                 </View>
               </View>
-
-              <Feather
-                name="alert-circle"
-                size={25}
-                color={mesSelecionado === "Jan" ? "#D2015D" : "green"}
-              />
+              {mesSelecionado.vencido ? (
+                <Feather name="alert-circle" size={25} color="#D2015D" />
+              ) : (
+                <MaterialCommunityIcons
+                  name="check-circle-outline"
+                  size={25}
+                  color="#16AA03"
+                />
+              )}
             </View>
 
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginTop: 40,
-              }}
-            >
+            <View style={styles.container_flex_between_center}>
               <View>
-                <Text style={{ color: "#ddd" }}>Vencimento</Text>
-                <Text style={{ color: "#ddd" }}>5 Jan</Text>
+                <Text style={styles.text_white}>Vencimento</Text>
+                <Text style={styles.text_white}>
+                  {mesSelecionado.vencimento}
+                </Text>
               </View>
 
-              <Text style={{ fontSize: 23, fontWeight: "bold" }}>
-                R$ 2.048,32
-              </Text>
+              <Text style={styles.text_valor_boleto}>R$ 2.048,32</Text>
             </View>
           </View>
 
-          <Text
-            style={{
-              color: "#909090",
-              textAlign: "center",
-              paddingHorizontal: 50,
-              fontSize: 18,
-            }}
-          >
+          <Text style={styles.text_codigo_boleto}>
             {" "}
             0333182903128312903821390123812903218312903123901238213908
           </Text>
         </View>
       </View>
 
-      <View style={{ padding: 20 }}>
-        <TouchableOpacity
-          style={{
-            backgroundColor: "#24BCCA",
-            padding: 15,
-            borderRadius: 25,
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ color: "#fff", fontWeight: "bold" }}>
-            Copiar código de barras
-          </Text>
+      <View style={styles.view_padding_20}>
+        <TouchableOpacity style={styles.button_copiar_codigo}>
+          <Text style={styles.text_botao_copiar}>Copiar código de barras</Text>
         </TouchableOpacity>
 
-        <Text
-          style={{
-            color: "#24BCCA",
-            padding: 15,
-            textAlign: "center",
-            fontWeight: "bold",
-          }}
-        >
-          Enviar boleto por e-mail
-        </Text>
+        <Text style={styles.text_botao_enviar}>Enviar boleto por e-mail</Text>
       </View>
     </View>
   );
@@ -169,18 +183,57 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#ddd",
   },
-  container_boleto: {
-    margin: 35,
-    padding: 15,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    backgroundColor: "#fff",
-  },
   container_vencido: {
     flexDirection: "row",
     alignItems: "center",
     paddingTop: 10,
+  },
+
+  container_flex_between: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  container_flex_between_center: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 40,
+  },
+
+  text_white: {
+    color: "#ddd",
+  },
+
+  text_codigo_boleto: {
+    color: "#909090",
+    textAlign: "center",
+    paddingHorizontal: 50,
+    fontSize: 18,
+  },
+
+  button_copiar_codigo: {
+    backgroundColor: "#24BCCA",
+    padding: 15,
+    borderRadius: 25,
+    alignItems: "center",
+  },
+
+  text_valor_boleto: { fontSize: 23, fontWeight: "bold" },
+  view_padding_20: {
+    padding: 20,
+  },
+
+  text_botao_copiar: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+
+  text_botao_enviar: {
+    color: "#24BCCA",
+    padding: 15,
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
 
