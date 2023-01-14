@@ -56,6 +56,7 @@ const Boletos = ({ navigation }: { navigation: any }) => {
                   onPress={() => {
                     setMesSelecionado(meses[indexMes]);
                   }}
+                  key={String(indexMes)}
                   style={{
                     marginRight: 20,
                     width: 36,
