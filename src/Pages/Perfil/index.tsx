@@ -32,7 +32,7 @@ const Perfil = ({ navigation }: { navigation: any }) => {
             </View>
           )}
           numColumns={2}
-          ListHeaderComponent={ListHeaderComponent}
+          ListHeaderComponent={<ListHeaderComponent navigation={navigation} />}
           ListFooterComponent={ListFooterComponent}
           keyExtractor={(item, index) => String(index)}
         />
@@ -43,7 +43,7 @@ const Perfil = ({ navigation }: { navigation: any }) => {
   );
 };
 
-const ListHeaderComponent = () => {
+const ListHeaderComponent = ({ navigation }: { navigation: any }) => {
   return (
     <View>
       <View style={styles.container}>
