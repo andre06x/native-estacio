@@ -1,36 +1,59 @@
-import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, View, TouchableHighlight, TouchableOpacity, TextInput } from 'react-native';
+import React, { useCallback, useEffect, useState } from "react";
+import { StatusBar } from "expo-status-bar";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Inter_700Bold, Inter_500Medium, Inter_600SemiBold, useFonts } from '@expo-google-fonts/inter';
-import AppLoading from 'expo-app-loading';
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { Ionicons } from '@expo/vector-icons';
-import { useState } from "react";
+import {
+  Inter_700Bold,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  useFonts,
+} from "@expo-google-fonts/inter";
+import { Ionicons } from "@expo/vector-icons";
+
+import * as SplashScreen from "expo-splash-screen";
 
 const LoginMicrosoft = ({ navigation }: { navigation: any }) => {
-  const [login, setLogin] = useState('');
+  const [login, setLogin] = useState("");
 
   let [fontsLoaded] = useFonts({
     Inter_600SemiBold,
     Inter_500Medium,
-    Inter_700Bold
+    Inter_700Bold,
   });
 
+  useEffect(() => {
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
+    }
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
   if (!fontsLoaded) {
-    return <AppLoading />;
+    return null;
   }
-
-  else return (
-    <SafeAreaView style={styles.container}>
-
-      <Image source={require('./microsoft_logo.png')} />
+  return (
+    <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
+      <Image source={require("./microsoft_logo.png")} />
       <Text style={styles.titulo}>Entrar</Text>
 
-      <TextInput 
+      <TextInput
         style={styles.input}
         placeholder="Email, telefone ou Skype"
         value={login}
-        onChangeText={(text) => setLogin(text)}  
+        onChangeText={(text) => setLogin(text)}
       />
 
       <TouchableOpacity>
@@ -38,8 +61,8 @@ const LoginMicrosoft = ({ navigation }: { navigation: any }) => {
       </TouchableOpacity>
 
       <View style={styles.container_button}>
-        <TouchableOpacity 
-          style={styles.botao_avancar} 
+        <TouchableOpacity
+          style={styles.botao_avancar}
           onPress={() => navigation.navigate("SenhaMicrosoft", login)}
         >
           <Text style={styles.text_avancar}>Avançar</Text>
@@ -52,15 +75,15 @@ const LoginMicrosoft = ({ navigation }: { navigation: any }) => {
       </TouchableOpacity>
 
       <View style={styles.outros}>
-      <TouchableOpacity style={{width: "33%"}}>
+        <TouchableOpacity style={{ width: "33%" }}>
           <Text style={styles.textOutros}>Termos de uso</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={{width: "43%"}}>
+        <TouchableOpacity style={{ width: "43%" }}>
           <Text style={styles.textOutros}>Privacidade e cookies</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={{width: "33%"}}>
+        <TouchableOpacity style={{ width: "33%" }}>
           <Text style={styles.textOutros}>...</Text>
         </TouchableOpacity>
       </View>
@@ -68,24 +91,24 @@ const LoginMicrosoft = ({ navigation }: { navigation: any }) => {
       <StatusBar style="dark" />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 30
+    backgroundColor: "#fff",
+    padding: 30,
   },
   logo: {
     width: 220,
     height: 60,
-    marginBottom: 20
+    marginBottom: 20,
   },
   titulo: {
     fontSize: 28,
     fontFamily: "Inter_700Bold",
     marginVertical: 20,
-    color: "#1B1B1B"
+    color: "#1B1B1B",
   },
 
   input: {
@@ -99,7 +122,7 @@ const styles = StyleSheet.create({
   },
 
   nao_consegue: {
-    color: "#0067b8"
+    color: "#0067b8",
   },
 
   container_button: {
@@ -114,11 +137,11 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 12,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   text_avancar: {
-    color: "#fff"
+    color: "#fff",
   },
 
   botao_opcoes: {
@@ -127,11 +150,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: "center",
     borderWidth: 1,
-    color: "black"
+    color: "black",
   },
 
   text_opcoes: {
-    marginLeft: 10
+    marginLeft: 10,
   },
 
   email: {
@@ -139,7 +162,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     textAlign: "center",
     color: "#999",
-
   },
   botao_entrar: {
     marginVertical: 34,
@@ -148,7 +170,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: "#24BCCA",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   botao_ajuda: {
     position: "absolute",
@@ -161,7 +183,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     justifyContent: "center",
     alignItems: "center",
-
   },
 
   outros: {
@@ -170,18 +191,14 @@ const styles = StyleSheet.create({
     left: 30,
     flexDirection: "row",
     display: "flex",
-    justifyContent:"space-between"
+    justifyContent: "space-between",
   },
 
   textOutros: {
     color: "#747474",
     marginRight: 10,
-    fontSize: 12
-  }
-
-
-
-
+    fontSize: 12,
+  },
 });
 
-export { LoginMicrosoft }
+export { LoginMicrosoft };
