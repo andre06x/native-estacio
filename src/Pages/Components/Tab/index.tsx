@@ -14,6 +14,7 @@ const TabBar = ({ navigation, tela }: { navigation: any; tela: string }) => {
     <View style={styles.tabs}>
       {tabOptions.map((item) => (
         <TouchableOpacity
+          key={item.nome}
           style={styles.view_tabs}
           onPress={() => (item.press ? navigation.navigate(item.press) : null)}
         >
