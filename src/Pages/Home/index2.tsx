@@ -43,7 +43,7 @@ const Home2 = ({ navigation }: { navigation: any }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" backgroundColor="#144BC9" />
-      <ScrollView style={{ backgroundColor: "#F8F8F8" }}>
+      <View style={{ backgroundColor: "#F8F8F8" }}>
         <View style={styles.profile}>
           <View style={styles.info}>
             <View>
@@ -76,24 +76,23 @@ const Home2 = ({ navigation }: { navigation: any }) => {
           </ScrollView>
         </View>
 
-        <View style={styles.container_opcoes}>
-          <Text style={styles.text_curso}>Meu curso</Text>
+        <FlatList
+          data={opcoes}
+          style={styles.container_opcoes}
+          horizontal={false}
+          renderItem={({ item }) => (
+            <View style={styles.view_opcao}>
+              <Feather name={item.icon} size={24} color="black" />
 
-          <FlatList
-            data={opcoes}
-            renderItem={({ item }) => (
-              <View style={styles.view_opcao}>
-                <Feather name={item.icon} size={24} color="black" />
-
-                <Text style={styles.text_opcao}>{item.nome}</Text>
-              </View>
-            )}
-            //Setting the number of column
-            numColumns={2}
-            keyExtractor={(item, index) => String(index)}
-          />
-        </View>
-      </ScrollView>
+              <Text style={styles.text_opcao}>{item.nome}</Text>
+            </View>
+          )}
+          numColumns={2}
+          keyExtractor={(item, index) => String(index)}
+          ListHeaderComponent={<Text style={styles.text_curso}>Meu curso</Text>}
+          ListFooterComponent={<View style={{ height: 300 }} />}
+        />
+      </View>
       <TabBar navigation={navigation} tela="Ínicio" />
     </SafeAreaView>
   );
@@ -155,6 +154,7 @@ const styles = StyleSheet.create({
   container_opcoes: {
     backgroundColor: "#F2F2F2",
     padding: 20,
+    paddingBottom: 50,
   },
 
   text_curso: {
