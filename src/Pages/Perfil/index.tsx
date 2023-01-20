@@ -33,7 +33,7 @@ const Perfil = ({ navigation }: { navigation: any }) => {
           )}
           numColumns={2}
           ListHeaderComponent={<ListHeaderComponent navigation={navigation} />}
-          ListFooterComponent={ListFooterComponent}
+          ListFooterComponent={<ListFooterComponent navigation={navigation} />}
           keyExtractor={(item, index) => String(index)}
         />
       </View>
@@ -102,12 +102,12 @@ const ListHeaderComponent = ({ navigation }: { navigation: any }) => {
   );
 };
 
-const ListFooterComponent = () => {
+const ListFooterComponent = ({ navigation }: { navigation: any }) => {
   return (
     <View style={{ height: 300 }}>
       <Text style={styles.text_versao}>Versão do app 5.13.0</Text>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Text style={styles.text_ajuda}>Sair do APP</Text>
       </TouchableOpacity>
     </View>
