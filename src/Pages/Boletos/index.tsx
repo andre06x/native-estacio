@@ -13,28 +13,28 @@ const meses = [
     mes: "Out",
     tipo: "Mensalidade",
     vencido: false,
-    valor: "2.048,32",
+    valor: "R$ 1.578,32",
     vencimento: "5 Out",
   },
   {
     mes: "Nov",
     tipo: "Mensalidade",
     vencido: false,
-    valor: "2.048,32",
+    valor: "R$ 1.048,32",
     vencimento: "5 Nov",
   },
   {
     mes: "Dez",
     tipo: "Mensalidade",
     vencido: false,
-    valor: "2.048,32",
+    valor: "R$ 2.848,32",
     vencimento: "5 Dez",
   },
   {
     mes: "Jan",
     tipo: "Renovação / Reabertura",
     vencido: true,
-    valor: "2.048,32",
+    valor: "R$ 2.048,32",
     vencimento: "5 Jan",
   },
 ];
@@ -139,7 +139,9 @@ const Boletos = ({ navigation }: { navigation: any }) => {
                 </Text>
               </View>
 
-              <Text style={styles.text_valor_boleto}>R$ 2.048,32</Text>
+              <Text style={styles.text_valor_boleto}>
+                {mesSelecionado.valor}
+              </Text>
             </View>
           </View>
 
