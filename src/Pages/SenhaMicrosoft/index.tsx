@@ -67,7 +67,7 @@ const SenhaMicrosoft = ({
 
         <Text style={styles.titulo}>Insira a senha</Text>
 
-        <TextInput style={styles.input} placeholder="Senha" />
+        <TextInput style={styles.input} placeholder="Senha" secureTextEntry />
 
         <TouchableOpacity>
           <Text style={styles.nao_consegue}>
