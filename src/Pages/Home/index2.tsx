@@ -94,11 +94,11 @@ const ListHeaderComponent = ({ navigation }: { navigation: any }) => {
           </RectButton>
 
           <RectButton style={styles.view_disciplina}>
-            <Text>Bases matemáticas</Text>
+            <Text>Probabilidade e estatística</Text>
           </RectButton>
 
           <RectButton style={styles.view_disciplina}>
-            <Text>Bases matemáticas</Text>
+            <Text>Algoritimos III</Text>
           </RectButton>
         </ScrollView>
       </View>
